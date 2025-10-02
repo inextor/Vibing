@@ -2,11 +2,11 @@ import http.server
 import socketserver
 import sys
 import pyautogui
-import unicodedata
 import time
+import unicodedata
 from urllib.parse import parse_qs
 
-VERSION = "1.0.0" # Versión actual del script
+VERSION = "1.2.0" # Versión actual del script (sin acentos)
 
 def strip_accents(text):
     # Mapeo manual para reemplazar acentos y ñ/Ñ
@@ -94,11 +94,11 @@ class WebUIKeyboardHandler(http.server.BaseHTTPRequestHandler):
         text_to_write = strip_accents(text)
         
         print(f"Texto a escribir (sin acentos): '{text_to_write}'", file=sys.stderr)
-        print(f"Escribiendo texto: {text_to_write[:100]}... (usando pyautogui.press())", file=sys.stderr)
+        print(f"Escribiendo texto: {text_to_write[:100]}... (usando pyautogui.press() para cada caracter)", file=sys.stderr)
         
         for char in text_to_write:
             pyautogui.press(char)
-            time.sleep(0.05) # Pequeña pausa entre caracteres para mayor fiabilidad
+            time.sleep(0.02) # Pequeña pausa entre caracteres para mayor fiabilidad
         
         print("Escritura completada.", file=sys.stderr)
 
@@ -106,7 +106,7 @@ def run_server(port=8000):
     server_address = ('', port)
     httpd = http.server.HTTPServer(server_address, WebUIKeyboardHandler)
     
-    print("--- Servidor con Interfaz Web ---", file=sys.stderr)
+    print("--- Servidor con Interfaz Web (Sin Acentos) ---", file=sys.stderr)
     print(f"Version: {VERSION}", file=sys.stderr) # Imprimir la versión
     print(f"1. Abre tu navegador y ve a: http://localhost:{port}", file=sys.stderr)
     print("2. Haz clic en la ventana donde quieres escribir (editor, etc.).", file=sys.stderr)

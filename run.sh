@@ -1,17 +1,21 @@
 #!/bin/bash
-set -e
+set -e # Exit on error
 
 echo "--- Iniciando Servidor HTTP a Teclado ---"
 
 # Directorio donde se encuentra el script
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
 
+# Limpiar caché de Python para asegurar que se cargue la última versión
+echo "Limpiando caché de Python (__pycache__)..."
+rm -rf "$SCRIPT_DIR/__pycache__"
+
 # 1. Asegurarse de que el setup se ha ejecutado
-# Esto creara el venv e instalara las dependencias si es necesario.
+# ... (existing setup.sh call) ...
 SETUP_SCRIPT="$SCRIPT_DIR/setup.sh"
 
 if [ ! -f "$SETUP_SCRIPT" ]; then
-    echo "Error: No se encuentra el script 'setup.sh'. Asegúrate de que esté en el mismo directorio."
+    echo "Error: No se pudo encontrar el script 'setup.sh'. Asegúrate de que esté en el mismo directorio."
     exit 1
 fi
 
@@ -34,8 +38,21 @@ if [ ! -f "$VENV_PYTHON" ]; then
     exit 1
 fi
 
-# 4. Ejecutar el script principal usando el Python del entorno virtual
+# 4. Determinar qué script ejecutar basado en el argumento
+SCRIPT_TO_RUN="http_to_keyboard_no_accents.py" # Por defecto
+
+if [ "$1" == "xdotool" ]; then
+    SCRIPT_TO_RUN="http_to_keyboard_xdotool.py"
+    echo "Modo: Usando xdotool para acentos."
+elif [ "$1" == "no-accents" ]; then
+    SCRIPT_TO_RUN="http_to_keyboard_no_accents.py"
+    echo "Modo: Reemplazando acentos (sin acentos)."
+else
+    echo "Modo: Por defecto, reemplazando acentos (sin acentos)."
+    echo "Uso: ./run.sh [no-accents|xdotool]"
+fi
+
 echo ""
 echo "-----------------------------------------------------"
-echo "Iniciando el servidor..."
-"$VENV_PYTHON" "$SCRIPT_DIR/http_to_keyboard.py"
+echo "Iniciando el servidor con: $SCRIPT_TO_RUN"
+"$VENV_PYTHON" "$SCRIPT_DIR/$SCRIPT_TO_RUN"

@@ -9,10 +9,16 @@ Este proyecto levanta un servidor web local con una interfaz sencilla para simul
 
 ### Dependencias de Sistema (Solo para Linux)
 
-En sistemas operativos basados en Debian/Ubuntu, `pyautogui` requiere algunas dependencias adicionales. Asegúrate de tenerlas instaladas ejecutando:
+`pyautogui` requiere algunas dependencias adicionales. Asegúrate de tenerlas instaladas ejecutando:
 
 ```bash
 sudo apt-get install scrot python3-tk python3-dev
+```
+
+Si vas a usar la versión con `xdotool`, también necesitas instalarlo:
+
+```bash
+sudo apt-get install xdotool
 ```
 
 ## Instalación y Configuración
@@ -35,21 +41,30 @@ El script se encargará de:
 
 ## Uso
 
-1.  **Activa el entorno virtual:**
-    Cada vez que abras una nueva terminal para trabajar en el proyecto, debes activar el entorno:
+Ahora puedes iniciar el servidor usando los scripts ejecutables directos. El script `run.sh` (llamado por estos) **limpiará automáticamente la caché de Python** antes de iniciar el servidor para asegurar que siempre se ejecute la última versión.
+
+1.  **Asegúrate de que los scripts `run_no_accents.sh` y `run_xdotool.sh` tengan permisos de ejecución:**
     ```bash
-    source .venv/bin/activate
+    chmod +x run_no_accents.sh run_xdotool.sh
     ```
 
-2.  **Inicia el servidor:**
+2.  **Para iniciar la versión que reemplaza los acentos:**
     ```bash
-    python3 http_to_keyboard.py
+    ./run_no_accents.sh
     ```
 
-3.  **Abre la interfaz web:**
+3.  **Para iniciar la versión que usa `xdotool` para los acentos:**
+    ```bash
+    ./run_xdotool.sh
+    ```
+    *(Asegúrate de tener `xdotool` instalado para esta opción: `sudo apt-get install xdotool`)*
+
+### Pasos Comunes (después de iniciar el servidor)
+
+1.  **Abre la interfaz web:**
     Abre tu navegador y ve a [http://localhost:8000](http://localhost:8000).
 
-4.  **Utiliza la herramienta:**
+2.  **Utiliza la herramienta:**
     - Haz clic en la ventana de la aplicación donde quieres escribir (un editor de texto, un chat, etc.) para darle el foco.
     - Vuelve al navegador, escribe el texto en el recuadro y elige una de las dos acciones:
         - **Enviar**: Escribe el texto.
