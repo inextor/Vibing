@@ -1,9 +1,23 @@
-
 import http.server
 import socketserver
 import sys
 import pyautogui
+import unicodedata
+import time
 from urllib.parse import parse_qs
+
+VERSION = "1.0.0" # Versión actual del script
+
+def strip_accents(text):
+    # Mapeo manual para reemplazar acentos y ñ/Ñ
+    accents_map = {
+        'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u',
+        'Á': 'A', 'É': 'E', 'Í': 'I', 'Ó': 'O', 'Ú': 'U',
+        'ñ': 'n', 'Ñ': 'N',
+    }
+    for accented_char, non_accented_char in accents_map.items():
+        text = text.replace(accented_char, non_accented_char)
+    return text
 
 # --- Configuracion de PyAutoGUI ---
 pyautogui.PAUSE = 0.01
@@ -50,8 +64,7 @@ class WebUIKeyboardHandler(http.server.BaseHTTPRequestHandler):
             action = parsed_data.get('action', ['send'])[0]
 
             if text_to_type:
-                print(f"Escribiendo texto: {text_to_type[:100]}...", file=sys.stderr)
-                pyautogui.write(text_to_type)
+                self._type_text(text_to_type)
 
                 if action == 'send_with_enter':
                     pyautogui.press('enter')
@@ -71,11 +84,30 @@ class WebUIKeyboardHandler(http.server.BaseHTTPRequestHandler):
             self.send_response(500)
             self.end_headers()
 
+    def _type_text(self, text):
+        """Funcion central para simular la escritura, reemplazando acentos y usando pyautogui.press() para cada caracter."""
+        if not text:
+            print("Nada que escribir.", file=sys.stderr)
+            return
+        
+        # Eliminar acentos del texto
+        text_to_write = strip_accents(text)
+        
+        print(f"Texto a escribir (sin acentos): '{text_to_write}'", file=sys.stderr)
+        print(f"Escribiendo texto: {text_to_write[:100]}... (usando pyautogui.press())", file=sys.stderr)
+        
+        for char in text_to_write:
+            pyautogui.press(char)
+            time.sleep(0.05) # Pequeña pausa entre caracteres para mayor fiabilidad
+        
+        print("Escritura completada.", file=sys.stderr)
+
 def run_server(port=8000):
     server_address = ('', port)
     httpd = http.server.HTTPServer(server_address, WebUIKeyboardHandler)
     
-    print("--- Servidor con Interfaz Web --- ", file=sys.stderr)
+    print("--- Servidor con Interfaz Web ---", file=sys.stderr)
+    print(f"Version: {VERSION}", file=sys.stderr) # Imprimir la versión
     print(f"1. Abre tu navegador y ve a: http://localhost:{port}", file=sys.stderr)
     print("2. Haz clic en la ventana donde quieres escribir (editor, etc.).", file=sys.stderr)
     print("3. Usa el formulario web para enviar texto.", file=sys.stderr)
