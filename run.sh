@@ -1,0 +1,41 @@
+#!/bin/bash
+set -e
+
+echo "--- Iniciando Servidor HTTP a Teclado ---"
+
+# Directorio donde se encuentra el script
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
+
+# 1. Asegurarse de que el setup se ha ejecutado
+# Esto creara el venv e instalara las dependencias si es necesario.
+SETUP_SCRIPT="$SCRIPT_DIR/setup.sh"
+
+if [ ! -f "$SETUP_SCRIPT" ]; then
+    echo "Error: No se encuentra el script 'setup.sh'. Asegúrate de que esté en el mismo directorio."
+    exit 1
+fi
+
+# Dar permisos de ejecución a setup.sh si no los tiene
+if [ ! -x "$SETUP_SCRIPT" ]; then
+    echo "Dando permisos de ejecución a 'setup.sh'..."
+    chmod +x "$SETUP_SCRIPT"
+fi
+
+# Ejecutar el script de configuración
+"$SETUP_SCRIPT"
+
+# 2. Definir la ruta al ejecutable de Python del entorno virtual
+VENV_PYTHON="$SCRIPT_DIR/.venv/bin/python3"
+
+# 3. Comprobar si el ejecutable de Python existe
+if [ ! -f "$VENV_PYTHON" ]; then
+    echo "Error: No se pudo encontrar el ejecutable de Python en el entorno virtual."
+    echo "Asegúrate de que el script 'setup.sh' se completó correctamente."
+    exit 1
+fi
+
+# 4. Ejecutar el script principal usando el Python del entorno virtual
+echo ""
+echo "-----------------------------------------------------"
+echo "Iniciando el servidor..."
+"$VENV_PYTHON" "$SCRIPT_DIR/http_to_keyboard.py"
