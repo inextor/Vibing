@@ -51,6 +51,6 @@ chmod +x setup.sh
 
 Las contribuciones son bienvenidas. Si tienes alguna idea o sugerencia, no dudes en abrir un issue o un pull request.
 
-## Licencia
+## Nota del autor
 
-Este proyecto está bajo la licencia MIT. Consulta el archivo `LICENSE` para más detalles.
+Este proyecto fue desarrollado en un 99.99% utilizando **Vibing**, la misma herramienta que estás viendo. Es un claro ejemplo de *dogfooding*, donde el desarrollador (que, por cierto, no sabía Python al empezar) construyó el proyecto usando su propia creación.
