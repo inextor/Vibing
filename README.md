@@ -1,79 +1,56 @@
-# Servidor HTTP a Teclado
 
-Este proyecto levanta un servidor web local con una interfaz sencilla para simular la escritura de texto en cualquier aplicación de tu escritorio.
+# Vibing
 
-## Requisitos
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Nexor-Soft/Vibing/main/vibing_banner.svg" alt="Vibing Banner">
+</p>
 
-- Python 3
-- `pip` y `venv` (generalmente incluidos con Python)
+<p align="center">
+    <img src="https://img.shields.io/badge/python-3.10-blue.svg" alt="Python 3.10">
+    <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="MIT License">
+</p>
 
-### Dependencias de Sistema (Solo para Linux)
+## ¿Qué es Vibing?
 
-`pyautogui` requiere algunas dependencias adicionales. Asegúrate de tenerlas instaladas ejecutando:
+Vibing es una herramienta que te permite **programar usando tu voz**. Funciona como un puente entre tu voz y tu editor de código, permitiéndote dictar código, comandos o cualquier texto directamente en el lugar donde tengas el foco, ya sea tu IDE, un editor de texto o una terminal.
+
+## ¿Cómo funciona?
+
+La herramienta levanta un servidor web local con una interfaz sencilla. Desde esta interfaz, puedes enviar texto a tu escritorio. El texto se escribirá en cualquier ventana que tenga el foco en ese momento.
+
+1.  **Inicia el servidor**: Ejecuta uno de los scripts `run_*.sh`.
+2.  **Abre la interfaz web**: Ve a `http://localhost:8000` en tu navegador.
+3.  **Selecciona la ventana de destino**: Haz clic en la ventana donde quieres escribir (por ejemplo, tu editor de código).
+4.  **Envía el texto**: Escribe o pega el texto en la interfaz web y haz clic en "Enviar".
+
+## Características
+
+- **Independiente del editor**: Funciona con cualquier aplicación de escritorio.
+- **Fácil de usar**: Interfaz web sencilla e intuitiva.
+- **Personalizable**: Puedes editar los botones de texto predefinido para adaptarlos a tus necesidades.
+- **Soporte para acentos**: Dos modos de funcionamiento para manejar los acentos.
+
+## Instalación
 
 ```bash
-sudo apt-get install scrot python3-tk python3-dev
+chmod +x setup.sh
+./setup.sh
 ```
-
-Si vas a usar la versión con `xdotool`, también necesitas instalarlo:
-
-```bash
-sudo apt-get install xdotool
-```
-
-## Instalación y Configuración
-
-Para facilitar la instalación, puedes usar el script de configuración.
-
-1.  **Dar permisos de ejecución al script:**
-    ```bash
-    chmod +x setup.sh
-    ```
-
-2.  **Ejecutar el script:**
-    ```bash
-    ./setup.sh
-    ```
-
-El script se encargará de:
-- Crear un entorno virtual de Python en una carpeta llamada `.venv`.
-- Instalar las dependencias necesarias (listadas en `requirements.txt`) dentro de ese entorno.
 
 ## Uso
 
-Ahora puedes iniciar el servidor usando los scripts ejecutables directos. El script `run.sh` (llamado por estos) **limpiará automáticamente la caché de Python** antes de iniciar el servidor para asegurar que siempre se ejecute la última versión.
-
-1.  **Asegúrate de que los scripts `run_no_accents.sh` y `run_xdotool.sh` tengan permisos de ejecución:**
-    ```bash
-    chmod +x run_no_accents.sh run_xdotool.sh
-    ```
-
-2.  **Para iniciar la versión que reemplaza los acentos:**
-    ```bash
-    ./run_no_accents.sh
-    ```
-
-3.  **Para iniciar la versión que usa `xdotool` para los acentos:**
-    ```bash
-    ./run_xdotool.sh
-    ```
-    *(Asegúrate de tener `xdotool` instalado para esta opción: `sudo apt-get install xdotool`)*
-
-### Pasos Comunes (después de iniciar el servidor)
-
-1.  **Abre la interfaz web:**
-    Abre tu navegador y ve a [http://localhost:8000](http://localhost:8000).
-
-2.  **Utiliza la herramienta:**
-    - Haz clic en la ventana de la aplicación donde quieres escribir (un editor de texto, un chat, etc.) para darle el foco.
-    - Vuelve al navegador, escribe el texto en el recuadro y elige una de las dos acciones:
-        - **Enviar**: Escribe el texto.
-        - **Enviar y Agregar Enter**: Escribe el texto y luego pulsa la tecla Enter.
-
-## Desactivar el Entorno
-
-Cuando termines de usar el proyecto, puedes desactivar el entorno virtual simplemente escribiendo:
-
 ```bash
-deactivate
+# Para la versión que reemplaza los acentos
+./run_no_accents.sh
+
+# Para la versión que usa xdotool para los acentos
+./run_xdotool.sh
 ```
+
+## Contribuir
+
+Las contribuciones son bienvenidas. Si tienes alguna idea o sugerencia, no dudes en abrir un issue o un pull request.
+
+## Licencia
+
+Este proyecto está bajo la licencia MIT. Consulta el archivo `LICENSE` para más detalles.
