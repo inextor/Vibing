@@ -128,14 +128,7 @@
                             <button type="button" id="fullscreen-toggle-btn" class="send-enter-btn">Entrar a Pantalla Completa</button>
                         </div>
                     </div>
-                    <div class="predefined-buttons">
-                        <button type="button" class="predefined-btn">git commit -m "feat: "</button>
-                        <button type="button" class="predefined-btn">git commit -m "fix: "</button>
-                        <button type="button" class="predefined-btn">git commit -m "docs: "</button>
-                        <button type="button" class="predefined-btn">git commit -m "style: "</button>
-                        <button type="button" class="predefined-btn">git commit -m "refactor: "</button>
-                        <button type="button" class="predefined-btn">git commit -m "test: "</button>
-                        <button type="button" class="predefined-btn">git commit -m "chore: "</button>
+                    <div class="predefined-buttons" id="predefined-buttons-container">
                     </div>
                 </form>
             </div>
@@ -198,15 +191,42 @@
                 fullscreenToggleBtn.addEventListener('click', toggleFullscreen);
                 document.addEventListener('fullscreenchange', updateFullscreenButton);
 
-                // Actualización inicial del botón
-                updateFullscreenButton();
+                
+                document.addEventListener('DOMContentLoaded', () => {
+                    const predefinedButtonsContainer = document.getElementById('predefined-buttons-container');
+                    let buttons = JSON.parse(localStorage.getItem('predefinedButtons'));
 
-                document.querySelectorAll('.predefined-btn').forEach(button => {
-                    button.addEventListener('click', () => {
-                        const textArea = document.getElementById('text_area');
-                        textArea.value = button.textContent;
-                        textArea.focus();
+                    if (!buttons || buttons.length === 0) {
+                        buttons = [
+                            'git commit -m "feat: "',
+                            'git commit -m "fix: "',
+                            'git commit -m "docs: "',
+                            'git commit -m "style: "',
+                            'git commit -m "refactor: "',
+                            'git commit -m "test: "',
+                            'git commit -m "chore: "'
+                        ];
+                        localStorage.setItem('predefinedButtons', JSON.stringify(buttons));
+                    }
+
+                    buttons.forEach(buttonText => {
+                        const button = document.createElement('button');
+                        button.type = 'button';
+                        button.className = 'predefined-btn';
+                        button.textContent = buttonText;
+                        button.addEventListener('click', () => {
+                            const textArea = document.getElementById('text_area');
+                            textArea.value = button.textContent;
+                            textArea.focus();
+                        });
+                        predefinedButtonsContainer.appendChild(button);
                     });
                 });
+
+                // Actualización inicial del botón
+                updateFullscreenButton();
             </script>
+            <div class="text-center mt-3">
+                <a href="/edit.html">Editar Botones</a>
+            </div>
         </body>
