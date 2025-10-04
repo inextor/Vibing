@@ -53,4 +53,4 @@ Las contribuciones son bienvenidas. Si tienes alguna idea o sugerencia, no dudes
 
 ## Nota del autor
 
-Este proyecto fue desarrollado en un 99.99% utilizando **Vibing**, la misma herramienta que estás viendo. Es un claro ejemplo de *dogfooding*, donde el desarrollador (que, por cierto, no sabía Python al empezar) construyó el proyecto usando su propia creación.
+Este proyecto fue desarrollado en un 99.99% utilizando **Vibing**, la misma herramienta que estás viendo. Es un claro ejemplo de *dogfooding*, donde el desarrollador (que, por cierto, no sabe Python) construyó el proyecto usando su propia creación.
