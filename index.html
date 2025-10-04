@@ -93,6 +93,28 @@
                 .fullscreen-btn:hover {
                     background-color: #004085;
                 }
+
+                .predefined-buttons {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 0.5rem;
+                    margin-top: 1rem;
+                }
+
+                .predefined-btn {
+                    padding: 0.5rem 1rem;
+                    font-size: 0.9rem;
+                    color: #ccc;
+                    background-color: #333;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    transition: background-color 0.2s;
+                }
+
+                .predefined-btn:hover {
+                    background-color: #444;
+                }
             </style>
         </head>
         <body onload="document.getElementById('text_area').focus();">
@@ -105,6 +127,15 @@
                             <button type="submit" name="action" value="send" class="send-btn">Enviar</button>
                             <button type="button" id="fullscreen-toggle-btn" class="send-enter-btn">Entrar a Pantalla Completa</button>
                         </div>
+                    </div>
+                    <div class="predefined-buttons">
+                        <button type="button" class="predefined-btn">git commit -m "feat: "</button>
+                        <button type="button" class="predefined-btn">git commit -m "fix: "</button>
+                        <button type="button" class="predefined-btn">git commit -m "docs: "</button>
+                        <button type="button" class="predefined-btn">git commit -m "style: "</button>
+                        <button type="button" class="predefined-btn">git commit -m "refactor: "</button>
+                        <button type="button" class="predefined-btn">git commit -m "test: "</button>
+                        <button type="button" class="predefined-btn">git commit -m "chore: "</button>
                     </div>
                 </form>
             </div>
@@ -169,5 +200,13 @@
 
                 // Actualización inicial del botón
                 updateFullscreenButton();
+
+                document.querySelectorAll('.predefined-btn').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const textArea = document.getElementById('text_area');
+                        textArea.value = button.textContent;
+                        textArea.focus();
+                    });
+                });
             </script>
         </body>
