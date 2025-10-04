@@ -27,6 +27,7 @@ La herramienta levanta un servidor web local con una interfaz sencilla. Desde es
 
 - **Independiente del editor**: Funciona con cualquier aplicación de escritorio.
 - **Fácil de usar**: Interfaz web sencilla e intuitiva.
+- **Modo de pantalla completa**: Para una experiencia de dictado más inmersiva.
 - **Personalizable**: Puedes editar los botones de texto predefinido para adaptarlos a tus necesidades.
 - **Soporte para acentos**: Dos modos de funcionamiento para manejar los acentos.
 
@@ -46,6 +47,18 @@ chmod +x setup.sh
 # Para la versión que usa xdotool para los acentos
 ./run_xdotool.sh
 ```
+
+## Acceso Remoto y HTTPS
+
+Si necesitas acceder a la interfaz de Vibing desde otro dispositivo o a través de una conexión segura (HTTPS), puedes utilizar herramientas como [ngrok](https://ngrok.com/). `ngrok` crea un túnel seguro a tu servidor local, exponiéndolo a Internet a través de una URL pública con HTTPS.
+
+Una vez que hayas iniciado el servidor de Vibing, puedes ejecutar el siguiente comando en otra terminal:
+
+```bash
+ngrok http 8000
+```
+
+`ngrok` te proporcionará una URL pública (por ejemplo, `https://<random-string>.ngrok.io`) que podrás usar para acceder a Vibing de forma segura desde cualquier lugar.
 
 ## Contribuir
 
